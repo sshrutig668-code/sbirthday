@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Sammy ❤️</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #ff5b91;
+      --soft: #ffd6e5;
+      --ink: #fff7fb;
+      --panel: #28172f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Quicksand', sans-serif;
+      color: var(--ink);
+      background: radial-gradient(ellipse at top, #4a2146 0, #211329 48%, #100a18 100%);
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      width: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 18px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page.active {
+      display: flex;
+      animation: pageIn .55s ease both;
+    }
+
+    /* The memories page is tall and scrollable */
+    #yesPage.active {
+      display: block;
+    }
+
+    .content {
+      width: min(820px, 100%);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: .76rem;
+      color: #ffb6cf;
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2.8rem, 9vw, 6.2rem);
+      line-height: 1.05;
+      margin: 18px 0;
+      letter-spacing: .5px;
+      background: linear-gradient(100deg, #fff, #ff9cbd, #ffdbe8);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      margin: 12px 0 20px;
+      font-weight: 600;
+    }
+
+    p { line-height: 1.8; }
+
+    .subtitle {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      color: #f4dce8;
+      font-size: clamp(1rem, 2.7vw, 1.18rem);
+    }
+
+    .btn {
+      display: inline-block;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 24px;
+      margin: 8px 5px;
+      background: linear-gradient(110deg, #ff4f8b, #c83b8a);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 8px 28px #ff4f8b30;
+      transition: transform .2s, filter .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+    .btn.secondary {
+      background: #ffffff10;
+      border: 1px solid #ffabc8a0;
+      box-shadow: none;
+    }
+
+    .heart-mark {
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      color: #ff75a7;
+      animation: pulse 1.5s infinite;
+    }
+
+    .page-hint {
+      font-size: .84rem;
+      color: #d8bed1;
+      margin-top: 22px;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, #ffffff12, #ffffff06);
+      border: 1px solid #ff9dbd45;
+      border-radius: 24px;
+      padding: clamp(20px, 5vw, 40px);
+      box-shadow: 0 18px 60px #0003;
+    }
+
+    .crying-cat {
+      display: block;
+      width: min(320px, 100%);
+      max-height: 360px;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      border-radius: 18px;
+    }
+
+    /* Four photos stacked vertically on one page */
+    .memories-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: min(620px, 100%);
+      margin: 28px auto 34px;
+    }
+
+    .memory-photo {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 780px;
+      object-fit: contain;
+      border-radius: 20px;
+      border: 2px solid #ffb4cf;
+      box-shadow: 0 12px 35px #ff5b9130;
+      background: #35233b;
+    }
+
+    .next-text {
+      display: inline-block;
+      margin: 20px auto 10px;
+      padding: 13px 24px;
+      border-radius: 999px;
+      background: linear-gradient(110deg, #ff4f8b, #c83b8a);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 8px 28px #ff4f8b30;
+      transition: transform .2s ease;
+      animation: nextPulse 1.8s ease-in-out infinite;
+    }
+
+    .next-text:hover {
+      transform: translateY(-3px);
+      text-decoration: none;
+    }
+
+    /* Letter image appears only on the surprise page */
+    .letter-container {
+      margin: 25px auto 10px;
+      text-align: center;
+    }
+
+    .letter-caption {
+      color: #ffd6e5;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .letter-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .letter-image {
+      display: block;
+      width: 150px;
+      max-width: 45vw;
+      height: auto;
+      filter: drop-shadow(0 8px 15px #ff5b9140);
+      animation: letterVibrate 2.5s ease-in-out infinite;
+    }
+
+    .letter-button:hover .letter-image { animation-duration: .6s; }
+
+    .letter-hint {
+      margin-top: 5px;
+      color: #ffd6e5;
+      font-size: .9rem;
+    }
+
+    /* The original love-letter format */
+    .note {
+      max-width: 740px;
+      margin: 20px auto 10px;
+      background: #fff0f6;
+      color: #4b2036;
+      border-radius: 12px;
+      padding: clamp(22px, 5vw, 44px);
+      text-align: left;
+      box-shadow: 0 14px 50px #0003;
+      font-family: 'Quicksand', sans-serif;
+      line-height: 1.9;
+    }
+
+    .note p {
+      white-space: pre-line;
+      line-height: 1.9;
+    }
+
+    .signature {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: #b12f69;
+      font-size: 1.2rem;
+      line-height: 1.8;
+    }
+
+    footer {
+      padding: 24px;
+      text-align: center;
+      color: #cdb8ca;
+      font-size: .85rem;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      z-index: 5;
+      color: #ff6d9e;
+      opacity: .7;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      to { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+    }
+
+    @keyframes pulse {
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes letterVibrate {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+      75% { transform: rotate(-2deg); }
+    }
+
+    @keyframes nextPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .75; }
+    }
+
+    /* Pop-in effect only on the welcome and love-letter pages */
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(.7) translateY(15px); }
+      70% { opacity: 1; transform: scale(1.05) translateY(-3px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    #welcome.active .content > *,
+    #letterPage.active .content > * {
+      animation: popIn .65s ease-out both;
+    }
+
+    #welcome.active .content > *:nth-child(1) { animation-delay: .1s; }
+    #welcome.active .content > *:nth-child(2) { animation-delay: .25s; }
+    #welcome.active .content > *:nth-child(3) { animation-delay: .4s; }
+    #welcome.active .content > *:nth-child(4) { animation-delay: .55s; }
+    #welcome.active .content > *:nth-child(5) { animation-delay: .7s; }
+    #welcome.active .content > *:nth-child(6) { animation-delay: .85s; }
+    #welcome.active .content > *:nth-child(7) { animation-delay: 1s; }
+
+    #letterPage.active .content > *:nth-child(1) { animation-delay: .1s; }
+    #letterPage.active .content > *:nth-child(2) { animation-delay: .3s; }
+    #letterPage.active .content > *:nth-child(3) { animation-delay: .5s; }
+    #letterPage.active .content > *:nth-child(4) { animation-delay: .7s; }
+
+    @media (max-width: 500px) {
+      .page { padding: 26px 14px; }
+      .memories-list { gap: 18px; }
+      .memory-photo { border-radius: 15px; }
+      .note { padding: 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: WELCOME -->
+  <section class="page active" id="welcome">
+    <div class="content">
+      <div class="heart-mark">♡</div>
+      <div class="eyebrow">A little something made just for you</div>
+      <h1>Happy Birthday,<br>Sammy ❤️</h1>
+      <p class="subtitle">
+        You make my world a little brighter just by being in it.
+        Today, this little surprise is all yours.
+      </p>
+
+      <h2 class="surprise-question">Do you wanna see a surprise? 🥹🎁</h2>
+
+      <div class="answer-buttons">
+        <button class="btn" onclick="showPage('yesPage'); makeHearts(12)">YES ❤️</button>
+        <button class="btn secondary" onclick="showPage('noPage')">NO 🙈</button>
+      </div>
+
+      <div class="page-hint">Your birthday surprise begins here ✨</div>
+    </div>
+  </section>
+
+  <!-- NO ANSWER PAGE -->
+  <section class="page" id="noPage">
+    <div class="content">
+      <div class="eyebrow">Wait... what? 🥺</div>
+      <h2>You're saying NO to my surprise? 😭</h2>
+
+      <div class="panel">
+        <img src="images/crying-cat.jpg" alt="A cute crying cat" class="crying-cat">
+        <p class="subtitle">Pleaseee? I made this just for you. 🥹💗</p>
+        <button class="btn" onclick="showPage('yesPage'); makeHearts(12)">Okay, Show Me! 🥺❤️</button>
+        <button class="btn secondary" onclick="showPage('welcome')">Let Me Think Again 🙈</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2: ALL FOUR MEMORIES, ONE BELOW ANOTHER -->
+  <section class="page" id="yesPage">
+    <div class="content">
+     
+      <div class="memories-list">
+        <img src="images/memory1.jpg" alt="Our first special memory" class="memory-photo">
+        <img src="images/memory2.jpg" alt="Another special memory" class="memory-photo">
+        <img src="images/memory3.jpg" alt="A beautiful memory together" class="memory-photo">
+        <img src="images/memory4.jpg" alt="One more favourite memory" class="memory-photo">
+      </div>
+
+      <p class="subtitle">And now... there's one more little surprise waiting for you. 💌</p>
+      <button class="btn" onclick="showPage('surprisePage'); makeHearts(8)">Go to next surprise 💖</button>
+    </div>
+  </section>
+
+  <!-- PAGE 3: VIBRATING LETTER IMAGE ONLY -->
+  <section class="page" id="surprisePage">
+    <div class="content">
+      <p class="eyebrow">One last little surprise 💞</p>
+      <h2>Made with all my love ❤️</h2>
+      <p class="subtitle"> I have something to tell you. 💌</p>
+
+      <div class="letter-container">
+        <button class="letter-button"
+                onclick="showPage('letterPage'); makeHearts(10)"
+                aria-label="Open your love letter">
+          <img src="images/letter.png" alt="A cute love letter" class="letter-image">
+        </button>
+        <p class="letter-hint">Click meee 💗</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 4: LOVE LETTER IN ITS ORIGINAL TEXT FORMAT -->
+  <section class="page" id="letterPage">
+    <div class="content">
+      <div class="eyebrow">From my heart to yours</div>
+      <h2>A Little Love Letter 💗</h2>
+
+      <div class="note">
+        <p>My dearest <strong id="letterName">Sammy</strong>,
+
+Happiest birthday to my baby who makes my ordinary days special. I hope this new year gives you peace of mind, sexy physique, extreme money, and everything you have been working towards.
+
+On your special day I wish that worries stay miles away from you and happiness surrounds you just like I always want to. In your lonely days I hope you always remember how loved and appreciated you are by me and everyone.
+
+Today, I want you to know that I will always be there for you and you can always count on me no matter the circumstances. Your happiness will always matter the most to me. I wish I could wrap all my love into one big hug and give it to you. Until then, here's a tiny corner of the internet made specially for you.
+
+Keep your smile and dreams big and never forget that you are most special to me.
+I love youuuu ❤️</p>
+        <div class="signature"> Forever cheering for you,<br><span id="yourName">Your girl</span> 💋</div>
+      </div>
+
+      <button class="btn" onclick="showPage('welcome')">↻ See Again ❤️</button>
+    </div>
+  </section>
+
+  <footer>Made with love, just for you ❤️</footer>
+
+  <script>
+    // PERSONALIZE THESE VALUES:
+    const Sammy = "Sammy";
+    const yourName = "Your girl";
+
+    document.title = `Happy Birthday, ${Sammy} ❤️`;
+    document.querySelector("#welcome h1").innerHTML =
+      `Happy Birthday,<br>${escapeHtml(Sammy)} ❤️`;
+    document.getElementById("letterName").textContent = Sammy;
+    document.getElementById("yourName").textContent = yourName;
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, ch => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[ch]));
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+      const page = document.getElementById(pageId);
+      if (page) page.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function makeHearts(count) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement("span");
+        heart.className = "heart";
+        heart.textContent = ["♥", "♡", "✦", "💗"][Math.floor(Math.random() * 4)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (14 + Math.random() * 22) + "px";
+        heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6500);
+      }
+    }
+  </script>
+</body>
+</html>
